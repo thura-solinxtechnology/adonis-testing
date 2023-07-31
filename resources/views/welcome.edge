@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdonisJS - A fully featured web framework for Node.js</title>
+  @entryPointStyles('app')
+  @entryPointScripts('app')
+</head>
+<body>
+
+  <main>
+    <div class="container">
+      <ul id="users-container">
+      </ul>
+    </div>
+
+    <div class="container">
+      <h3>Send Messages</h3>
+      <ul id="send">
+      </ul>
+      <hr>
+      <h3>Received Messages</h3>
+      <ul id="received">
+      </ul>
+    </div>
+
+    <div class="container">
+      <div>
+        <p>TO : <span id="to"></span></p>
+      </div>
+      <input type="text" placeholder="message" id="message">
+      <button id="sendBtn">Send</button>
+    </div>
+  </main>
+
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+  <script>
+    const socket = io()
+    let toUser = null
+
+    function updateUserLists(users) {
+      const usersContainer = document.getElementById('users-container')
+
+      users.forEach(user => {
+        const li = document.createElement('li')
+        li.setAttribute('id', user);
+        li.innerText = `Socket (${user})`
+        usersContainer.appendChild(li);
+
+        li.addEventListener('click', (e) => {
+          toUser = user
+          document.getElementById('to').innerText = `Socket (${user})`
+        })
+      })
+    }
+
+    socket.on('users:update-list', (data) => {
+      updateUserLists(data.users)
+    })
+
+    function createListElement(text) {
+      const li = document.createElement('li')
+      li.innerHTML = text
+      return li
+    }
+
+    const sendBtn = document.getElementById('sendBtn');
+    const input = document.getElementById('message');
+    const send = document.getElementById('send')
+    const received = document.getElementById('received')
+
+    sendBtn.addEventListener('click', function(e) {
+      if (toUser === null) {
+        alert('Please select user!')
+        return
+      }
+
+      const message = input.value.trim()
+
+      if (message) {
+        send.appendChild(createListElement(message))
+        socket.emit('message:send', {message})
+        input.value = ''
+      }
+    });
+
+    socket.on('message:send', ({message}) => {
+      received.appendChild(createListElement(message))
+    })
+  </script>
+</body>
+</html>

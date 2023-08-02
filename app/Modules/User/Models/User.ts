@@ -20,13 +20,13 @@ export default class User extends BaseModel {
   @column()
   public phone?: string
 
-  @column()
+  @column({ serializeAs: 'firebaseToken' })
   public firebaseToken?: string
 
-  @column()
+  @column({ serializeAs: 'loginType' })
   public loginType: LoginTypes
 
-  @column()
+  @column({ serializeAs: 'loginId' })
   public loginId?: string
 
   @column({ serializeAs: null })
@@ -34,6 +34,7 @@ export default class User extends BaseModel {
 
   @column.dateTime({
     autoCreate: true,
+    serializeAs: 'createdAt',
     serialize: (value: DateTime | null) => {
       return value
         ? { string: value.toFormat('yyyy-MM-dd HH:mm:ss'), human: value.toRelative() }
@@ -45,6 +46,7 @@ export default class User extends BaseModel {
   @column.dateTime({
     autoCreate: true,
     autoUpdate: true,
+    serializeAs: 'updatedAt',
     serialize: (value: DateTime | null) => {
       return value
         ? { string: value.toFormat('yyyy-MM-dd HH:mm:ss'), human: value.toRelative() }

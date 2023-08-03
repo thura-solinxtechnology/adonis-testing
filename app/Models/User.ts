@@ -1,8 +1,16 @@
 import Hash from '@ioc:Adonis/Core/Hash'
-import { BaseModel, beforeCreate, beforeSave, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  HasMany,
+  beforeCreate,
+  beforeSave,
+  column,
+  hasMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import LoginTypes from 'App/Modules/Common/Enums/LoginTypes'
 import { DateTime } from 'luxon'
 import * as uuid from 'uuid'
+import Otp from './Otp'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -54,6 +62,9 @@ export default class User extends BaseModel {
     },
   })
   public updatedAt: DateTime
+
+  @hasMany(() => Otp)
+  public otps: HasMany<typeof Otp>
 
   @beforeSave()
   public static async hashPassword(user: User) {

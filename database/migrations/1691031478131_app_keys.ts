@@ -1,14 +1,15 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class extends BaseSchema {
-  protected tableName = 'otps'
+  protected tableName = 'app_keys'
 
   public async up() {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.string('user_id').notNullable()
-      table.string('code', 6).notNullable()
-      table.timestamp('expired_at', { useTz: true }).nullable()
+      table.string('name').notNullable()
+      table.string('app_id').notNullable()
+      table.string('app_secrete').notNullable()
+      table.boolean('obsolete').defaultTo(false)
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

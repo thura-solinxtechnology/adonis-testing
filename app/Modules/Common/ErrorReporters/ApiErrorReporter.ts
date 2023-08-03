@@ -3,7 +3,7 @@ import {
   MessagesBagContract,
   ValidationException,
 } from '@ioc:Adonis/Core/Validator'
-import { Status } from '../Responses/Status'
+import { Status } from '../../../Http/Responses/Status'
 
 /**
  * The shape of an individual error

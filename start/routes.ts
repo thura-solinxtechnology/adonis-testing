@@ -1,28 +1,17 @@
-/*
-|--------------------------------------------------------------------------
-| Routes
-|--------------------------------------------------------------------------
-|
-| This file is dedicated for defining HTTP routes. A single file is enough
-| for majority of projects, however you can define routes in different
-| files and just make sure to import them inside this file. For example
-|
-| Define routes in following two files
-| ├── start/routes/cart.ts
-| ├── start/routes/customer.ts
-|
-| and then import them inside `start/routes.ts` as follows
-|
-| import './routes/cart'
-| import './routes/customer''
-|
-*/
-
 import Route from '@ioc:Adonis/Core/Route'
+import ApiResponses from 'App/Http/Responses/ApiResponses'
+import AppKey from 'App/Models/AppKey'
+import * as uuid from 'uuid'
 
-import 'App/Modules/Auth/routes'
-import 'App/Modules/User/routes'
+import './api/auth'
+import './api/users'
 
-Route.get('/', async ({ view }) => {
-  return view.render('welcome')
+Route.post('/api/keys-generate', async ({ request, response }) => {
+  const appKey = await AppKey.create({
+    name: request.body().name,
+    appId: uuid.v4(),
+    appSecrete: uuid.v4() + '-' + uuid.v4(),
+  })
+
+  return ApiResponses.success(response, { data: appKey })
 })

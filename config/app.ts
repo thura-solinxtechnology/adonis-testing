@@ -14,6 +14,8 @@ import type { ServerConfig } from '@ioc:Adonis/Core/Server'
 import type { ValidatorConfig } from '@ioc:Adonis/Core/Validator'
 import proxyAddr from 'proxy-addr'
 
+export const appName: string = Env.get('APP_NAME')
+
 /*
 |--------------------------------------------------------------------------
 | Application secret key

@@ -16,7 +16,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 import HttpExceptionHandler from '@ioc:Adonis/Core/HttpExceptionHandler'
 import Logger from '@ioc:Adonis/Core/Logger'
-import { Status } from 'App/Modules/Common/Responses/Status'
+import { Status } from 'App/Http/Responses/Status'
 
 export default class ExceptionHandler extends HttpExceptionHandler {
   protected statusPages = {

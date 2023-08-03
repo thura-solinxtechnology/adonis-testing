@@ -1,9 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import ApiResponses from 'App/Http/Responses/ApiResponses'
+import { Status } from 'App/Http/Responses/Status'
+import User from 'App/Models/User'
+import SocialLoginValidator from 'App/Modules/Auth/Validators/SocialLoginValidator'
 import LoginTypes from 'App/Modules/Common/Enums/LoginTypes'
-import ApiResponses from 'App/Modules/Common/Responses/ApiResponses'
-import { Status } from 'App/Modules/Common/Responses/Status'
-import User from 'App/Modules/User/Models/User'
-import SocialLoginValidator from '../Validators/SocialLoginValidator'
 
 export default class SocialLoginsController {
   public async handle({ request, response, auth }: HttpContextContract) {

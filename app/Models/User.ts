@@ -37,7 +37,7 @@ export default class User extends BaseModel {
   @column({ serializeAs: 'loginId' })
   public loginId?: string
 
-  @column({ serializeAs: null })
+  @column.dateTime({ serializeAs: null })
   public emailVerifiedAt?: DateTime
 
   @column.dateTime({

@@ -9,11 +9,18 @@ export default class RegisterController {
   public async handle({ response, request }: HttpContextContract) {
     const data = await request.validate(RegisterValidator)
 
-    await EmailRegister.handle(RegisterData.of(data))
+    try {
+      await EmailRegister.handle(RegisterData.of(data))
 
-    ApiResponses.success(response, {
-      message: 'Register success. OTP code is sent to your email',
-      status: Status.CREATED,
-    })
+      ApiResponses.success(response, {
+        message: 'Register success. OTP code is sent to your email',
+        status: Status.CREATED,
+      })
+    } catch (error) {
+      ApiResponses.error(response, {
+        message: error.message,
+        status: error.status,
+      })
+    }
   }
 }

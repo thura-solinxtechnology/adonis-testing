@@ -31,6 +31,9 @@ export default class User extends BaseModel {
   @column({ serializeAs: 'firebaseToken' })
   public firebaseToken?: string
 
+  @column()
+  public profileImage?: string
+
   @column({ serializeAs: 'loginType' })
   public loginType: LoginTypes
 

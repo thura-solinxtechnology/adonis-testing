@@ -2,7 +2,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 import Factory from '@ioc:Adonis/Lucid/Factory'
 
 import User from 'App/Models/User'
-import LoginTypes from 'App/Modules/Auth/Enums/LoginTypes'
+import LoginTypes from 'App/Modules/Common/Enums/LoginTypes'
 
 export default Factory.define(User, async ({ faker }) => {
   return {
@@ -14,5 +14,6 @@ export default Factory.define(User, async ({ faker }) => {
     loginType: LoginTypes.Email,
     loginId: faker.string.alphanumeric(16),
     firebaseToken: faker.string.alphanumeric(25),
+    profileImage: undefined,
   }
 }).build()

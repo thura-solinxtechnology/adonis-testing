@@ -19,6 +19,7 @@ export default class extends BaseSchema {
       table.string('login_id').nullable()
 
       table.string('firebase_token').nullable()
+      table.string('profile_image').nullable()
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

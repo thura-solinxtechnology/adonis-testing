@@ -5,9 +5,9 @@
  * file.
  */
 
-import Env from '@ioc:Adonis/Core/Env'
 import { driveConfig } from '@adonisjs/core/build/config'
 import Application from '@ioc:Adonis/Core/Application'
+import Env from '@ioc:Adonis/Core/Env'
 
 /*
 |--------------------------------------------------------------------------
@@ -93,15 +93,17 @@ export default driveConfig({
     |**************************************************************************
     |
     */
-    // s3: {
-    //   driver: 's3',
-    //   visibility: 'public',
-    //   key: Env.get('S3_KEY'),
-    //   secret: Env.get('S3_SECRET'),
-    //   region: Env.get('S3_REGION'),
-    //   bucket: Env.get('S3_BUCKET'),
-    //   endpoint: Env.get('S3_ENDPOINT'),
-    //
+    s3: {
+      driver: 's3',
+      visibility: 'private',
+      key: Env.get('S3_KEY'),
+      secret: Env.get('S3_SECRET'),
+      region: Env.get('S3_REGION'),
+      bucket: Env.get('S3_BUCKET'),
+      endpoint: Env.get('S3_ENDPOINT'),
+      cdnUrl: 'https://1-file-storage.nyc3.cdn.digitaloceanspaces.com',
+      forcePathStyle: true,
+    },
     //  // For minio to work
     //  // forcePathStyle: true,
     // },

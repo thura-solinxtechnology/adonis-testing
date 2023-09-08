@@ -1,5 +1,7 @@
 # Adonis Chating Demo
 
+**Your machine is already installed NodeJs.**
+
 ## Usage
 
 ```bash

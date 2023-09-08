@@ -6,12 +6,16 @@ import * as uuid from 'uuid'
 import './api/auth'
 import './api/users'
 
-Route.post('/api/keys-generate', async ({ request, response }) => {
+Route.post('/api/keys-generate', async ({ request }) => {
   const appKey = await AppKey.create({
     name: request.body().name,
     appId: uuid.v4(),
     appSecrete: uuid.v4() + '-' + uuid.v4(),
   })
 
-  return ApiResponses.success(response, { data: appKey })
+  return new ApiResponses().success({ data: appKey })
+})
+
+Route.get('/', ({ view }) => {
+  return view.render('welcome')
 })

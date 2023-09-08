@@ -75,7 +75,8 @@ export class ApiErrorReporter implements ErrorReporterContract<{ errors: ErrorNo
    */
   public toJSON() {
     return {
-      message: 'Validation Errors!',
+      message: 'One or more input fields are invalid!',
+      code: 'E_VALIDATION_FAILURE',
       status: Status.UNPROCESSABLE_CONTENT,
       errors: this.errors,
     }

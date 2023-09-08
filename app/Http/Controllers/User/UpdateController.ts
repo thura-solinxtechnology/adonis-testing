@@ -3,7 +3,7 @@ import ApiResponses from 'App/Http/Responses/ApiResponses'
 import { v4 } from 'uuid'
 
 export default class UpdateController {
-  public async handle({ response, request, auth }: HttpContextContract) {
+  public async handle({ request, auth }: HttpContextContract) {
     const profileImage = request.file('profile_image')
 
     if (profileImage) {
@@ -13,9 +13,9 @@ export default class UpdateController {
         name: name,
       })
 
-      await auth.user?.merge({ profileImage: path + name })
+      await auth.user?.merge({ profileImage: path + name }).save()
     }
 
-    return ApiResponses.success(response, { data: auth.user })
+    return new ApiResponses().success({ data: auth.user })
   }
 }

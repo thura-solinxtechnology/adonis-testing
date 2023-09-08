@@ -24,6 +24,35 @@ const databaseConfig: DatabaseConfig = {
   connections: {
     /*
     |--------------------------------------------------------------------------
+    | SQLite
+    |--------------------------------------------------------------------------
+    |
+    | Configuration for the SQLite database.  Make sure to install the driver
+    | from npm when using this connection
+    |
+    | npm i sqlite3
+    |
+    */
+    sqlite: {
+      client: 'sqlite',
+      connection: {
+        filename: ':memory:',
+      },
+      pool: {
+        afterCreate: (conn, cb) => {
+          conn.run('PRAGMA foreign_keys=true', cb)
+        },
+      },
+      migrations: {
+        naturalSort: true,
+      },
+      useNullAsDefault: true,
+      healthCheck: false,
+      debug: false,
+    },
+
+    /*
+    |--------------------------------------------------------------------------
     | MySQL config
     |--------------------------------------------------------------------------
     |

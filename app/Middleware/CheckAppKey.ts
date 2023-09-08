@@ -4,12 +4,12 @@ import { Status } from 'App/Http/Responses/Status'
 import AppKey from 'App/Models/AppKey'
 
 export default class CheckAppKey {
-  public async handle({ request, response }: HttpContextContract, next: () => Promise<void>) {
+  public async handle({ request }: HttpContextContract, next: () => Promise<void>) {
     const appId = request.header('app-id')
     const appSecrete = request.header('app-secrete')
 
     if (!appId || !appSecrete) {
-      return ApiResponses.error(response, {
+      return new ApiResponses().error({
         message: 'You do not have permission to access api!',
         status: Status.FORBIDDEN,
       })
@@ -21,14 +21,14 @@ export default class CheckAppKey {
       .first()
 
     if (!appKey) {
-      return ApiResponses.error(response, {
-        message: 'Unauthorized!',
+      return new ApiResponses().error({
+        message: 'Your app-key is mismatch!',
         status: Status.UNAUTHORIZED,
       })
     }
 
     if (appKey.obsolete) {
-      return ApiResponses.error(response, {
+      return new ApiResponses().error({
         message: 'Your app-id and app-secrete key is obsoleted!',
         status: Status.UNAUTHORIZED,
       })

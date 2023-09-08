@@ -1,4 +1,5 @@
-import { ResponseContract } from '@ioc:Adonis/Core/Response'
+import HttpContext from '@ioc:Adonis/Core/HttpContext'
+
 import { Status } from './Status'
 
 interface ResponseBody<T> {
@@ -8,20 +9,22 @@ interface ResponseBody<T> {
 }
 
 export default class ApiResponses {
-  public static success<T>(response: ResponseContract, body: ResponseBody<T>) {
+  public success<T>(body: ResponseBody<T>) {
+    const ctx = HttpContext.get()!
     const { data, status = Status.OK, message = 'Success.' } = body
 
-    return response.safeStatus(status).safeHeader('Accept', 'application/json').json({
+    ctx.response.safeStatus(status).safeHeader('Accept', 'application/json').json({
       data,
       message,
       status,
     })
   }
 
-  public static error(response, body: ResponseBody<null>) {
+  public error(body: ResponseBody<null>) {
+    const ctx = HttpContext.get()!
     const { message = 'Error!', status = Status.INTERNAL_SERVER_ERROR } = body
 
-    return response.safeStatus(status).json({
+    ctx.response.safeStatus(status).json({
       message,
       status,
     })

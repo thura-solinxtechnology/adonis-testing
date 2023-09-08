@@ -5,15 +5,15 @@ import VerifyData from 'App/Modules/Auth/Data/VerifyData'
 import VerifyValidator from 'App/Modules/Auth/Validators/VerifyValidator'
 
 export default class VerifyController {
-  public async handle({ response, request, auth }: HttpContextContract) {
+  public async handle({ request }: HttpContextContract) {
     const data = await request.validate(VerifyValidator)
 
     try {
-      const token = await VerifyEmail.handle(VerifyData.of(data), auth)
+      await VerifyEmail.handle(VerifyData.of(data))
 
-      return ApiResponses.success(response, { data: token })
+      return new ApiResponses().success({ message: 'Your email is verifyed successfull.' })
     } catch (error) {
-      return ApiResponses.error(response, { message: error.message })
+      return new ApiResponses().error({ message: error.message })
     }
   }
 }

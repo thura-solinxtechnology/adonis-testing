@@ -5,18 +5,18 @@ import UserCredential from 'App/Modules/Auth/Data/UserCredential'
 import LoginValidator from 'App/Modules/Auth/Validators/LoginValidator'
 
 export default class LoginController {
-  public async handle({ response, request, auth }: HttpContextContract) {
+  public async handle({ request, auth }: HttpContextContract) {
     const data = await request.validate(LoginValidator)
 
     try {
       const user = await UserLogin.handle(UserCredential.of(data))
 
-      ApiResponses.success(response, {
+      new ApiResponses().success({
         data: await auth.use('api').generate(user),
         message: 'Login success.',
       })
     } catch (error) {
-      ApiResponses.error(response, { message: error.message })
+      new ApiResponses().error({ message: error.message })
     }
   }
 }

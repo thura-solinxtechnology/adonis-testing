@@ -8,19 +8,12 @@ export default class LoginValidator {
   public reporter = ApiErrorReporter
 
   public schema = schema.create({
-    email: schema.string([
-      rules.required(),
-      rules.email(),
-      rules.maxLength(255),
-      rules.exists({ table: 'users', column: 'email' }),
-    ]),
+    email: schema.string([rules.required(), rules.exists({ table: 'users', column: 'email' })]),
     password: schema.string([rules.required(), rules.minLength(8)]),
   })
 
   public messages: CustomMessages = {
     'email.required': 'Email is required!',
-    'email.email': 'Email is invalid!',
-    'email.maxLength': 'Email is too long!',
     'email.exists': 'Email has not been registered yet!',
     'password.required': 'Password is required!',
     'password.minLength': 'Password must include at least 8 length!',

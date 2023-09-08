@@ -1,5 +1,3 @@
-import Hash from '@ioc:Adonis/Core/Hash'
-
 interface RegisterDataInterface {
   name: string
   email: string
@@ -25,7 +23,7 @@ export default class RegisterData {
     return {
       name: this.name,
       email: this.email,
-      password: await Hash.make(this.password),
+      password: this.password,
     }
   }
 }

@@ -1,5 +1,4 @@
 import { Exception } from '@adonisjs/core/build/standalone'
-import { AuthContract } from '@ioc:Adonis/Addons/Auth'
 import User from 'App/Models/User'
 import { DateTime } from 'luxon'
 import VerifyData from '../Data/VerifyData'
@@ -7,16 +6,14 @@ import FetchLatestUserOtp from '../Queries/FetchLatestUserOtp'
 import FetchRegisteredUserByEmail from '../Queries/FetchRegisteredUserByEmail'
 
 class VerifyEmail {
-  public async handle(data: VerifyData, auth: AuthContract) {
+  public async handle(data: VerifyData) {
     const user = await FetchRegisteredUserByEmail.handle(data.email)
 
-    await this.checkAlreadyRegister(user)
+    this.checkAlreadyRegister(user)
 
     await this.checkOtpCode(user!, data.code)
 
     await user!.merge({ emailVerifiedAt: DateTime.now() }).save()
-
-    return auth.use('api').generate(user!)
   }
 
   private async checkOtpCode(user: User, otpCode: string) {

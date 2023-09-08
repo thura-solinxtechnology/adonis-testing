@@ -1,4 +1,3 @@
-import Hash from '@ioc:Adonis/Core/Hash'
 import Factory from '@ioc:Adonis/Lucid/Factory'
 
 import User from 'App/Models/User'
@@ -9,7 +8,7 @@ export default Factory.define(User, async ({ faker }) => {
     id: faker.string.uuid(),
     name: faker.internet.userName(),
     email: faker.internet.email(),
-    password: await Hash.make('password'),
+    password: 'password',
     phone: faker.phone.number(),
     loginType: LoginTypes.Email,
     loginId: faker.string.alphanumeric(16),

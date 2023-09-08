@@ -6,18 +6,18 @@ import RegisterData from 'App/Modules/Auth/Data/RegisterData'
 import RegisterValidator from 'App/Modules/Auth/Validators/RegisterValidator'
 
 export default class RegisterController {
-  public async handle({ response, request }: HttpContextContract) {
+  public async handle({ request }: HttpContextContract) {
     const data = await request.validate(RegisterValidator)
 
     try {
       await EmailRegister.handle(RegisterData.of(data))
 
-      ApiResponses.success(response, {
+      new ApiResponses().success({
         message: 'Register success. OTP code is sent to your email',
         status: Status.CREATED,
       })
     } catch (error) {
-      ApiResponses.error(response, {
+      new ApiResponses().error({
         message: error.message,
         status: error.status,
       })
